@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>收入纳税明细</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: #2b2f3a;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    overflow: hidden;
+  }
+
+  /* 手机壳 */
+  .phone {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 100vh;
+    margin: 0 auto;
+    background: #f0f1f5;
+    overflow: hidden;
+  }
+
+  @media (min-width: 500px) {
+    .phone {
+      height: calc(100vh - 48px);
+      margin: 24px auto;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  /* ===== M1：固定头部 ===== */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    z-index: 100;
+    background: #ffffff;
+    line-height: 0;
+  }
+
+  @media (min-width: 500px) {
+    .header {
+      top: 24px;
+    }
+  }
+
+  .header img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ===== M2：可上下滑动区 ===== */
+  .scroll {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #f0f1f5;
+    line-height: 0;
+  }
+
+  .scroll::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+
+  .scroll img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+
+    <!-- M11 固定头部 -->
+    <div class="header" id="header">
+      <img src="assets/M11.jpg" alt="收入纳税明细 头部">
+    </div>
+
+    <!-- M12 可上下滑动 -->
+    <div class="scroll" id="scroll">
+      <img src="assets/M12.jpg" alt="纳税明细列表">
+    </div>
+
+  </div>
+
+<script>
+  // M11 加载后测量其渲染高度，把滚动区往下推同样距离，避免被头部遮住
+  const header = document.getElementById('header');
+  const scroll = document.getElementById('scroll');
+  const headerImg = header.querySelector('img');
+
+  function syncOffset() {
+    const h = header.getBoundingClientRect().height;
+    scroll.style.paddingTop = h + 'px';
+  }
+
+  if (headerImg.complete) {
+    syncOffset();
+  } else {
+    headerImg.addEventListener('load', syncOffset);
+  }
+  window.addEventListener('resize', syncOffset);
+</script>
+</body>
+</html>
